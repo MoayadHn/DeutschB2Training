@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>German Vocabulary Test</title>
+</head>
+<body>
+  <div class="container">
+    <h1>German Vocabulary Test</h1>
+    <div id="question-container"></div>
+    <div id="result-container"></div>
+    <button id="restart-button" class="button" style="display: none;">Restart Test</button>
+  </div>
+
+  <script type="module">
+    import vocabulary from './vocabulary.js';
+
+    var randomQuestions = [];
+    var totalQuestions = 5;
+    var vocabularyCopy = vocabulary.slice();
+
+    for (var i = 0; i < totalQuestions; i++) {
+      var randomIndex = Math.floor(Math.random() * vocabularyCopy.length);
+      var randomQuestion = vocabularyCopy.splice(randomIndex, 1)[0];
+      randomQuestions.push(randomQuestion);
+    }
+
+    var questionContainer = document.getElementById('question-container');
+    var resultContainer = document.getElementById('result-container');
+    var restartButton = document.getElementById('restart-button');
+
+    var currentQuestionIndex = 0;
+    var score = 0;
+
+    function displayQuestion() {
+      var question = randomQuestions[currentQuestionIndex];
+      var questionHtml = `
+        <div class="question">
+          <p>${question.question}</p>
+          <ul class="options">
+            ${question.choices
+              .map(
+                (choice, index) =>
+                  `<li class="option" data-index="${index}">${choice}</li>`
+              )
+              .join('')}
+          </ul>
+        </div>
+      `;
+      questionContainer.innerHTML = questionHtml;
+
+      var options = questionContainer.querySelectorAll('.option');
+      options.forEach(option => {
+        option.addEventListener('click', handleAnswerSelection);
+      });
+    }
+
+
+    function handleAnswerSelection(event) {
+      var selectedOption = event.target;
+      var selectedAnswerIndex = parseInt(selectedOption.getAttribute('data-index'));
+
+      var question = randomQuestions[currentQuestionIndex];
+      var correctAnswerIndex = question.correctAnswerIndex;
+
+      if (selectedAnswerIndex === correctAnswerIndex) {
+        score++;
+        selectedOption.classList.add('correct');
+      } else {
+        selectedOption.classList.add('incorrect');
+      }
+
+      var options = questionContainer.querySelectorAll('.option');
+      options.forEach(option => {
+        option.removeEventListener('click', handleAnswerSelection);
+      });
+
+      currentQuestionIndex++;
+
+      if (currentQuestionIndex < totalQuestions) {
+        setTimeout(displayQuestion, 1000);
+      } else {
+        displayResult();
+      }
+    }
+
+    function displayResult() {
+      questionContainer.style.display = 'none';
+
+      var resultHtml = `
+        <h2>Test Result</h2>
+        <p>Your score: ${score}/${totalQuestions}</p>
+      `;
+      resultContainer.innerHTML = resultHtml;
+
+      restartButton.style.display = 'block';
+      restartButton.addEventListener('click', restartTest);
+    }
+
+    function restartTest() {
+      currentQuestionIndex = 0;
+      score = 0;
+
+      questionContainer.style.display = 'block';
+      resultContainer.innerHTML = '';
+      restartButton.style.display = 'none';
+
+      randomQuestions = [];
+      vocabularyCopy = vocabulary.slice();
+
+      for (var i = 0; i < totalQuestions; i++) {
+        var randomIndex = Math.floor(Math.random() * vocabularyCopy.length);
+        var randomQuestion = vocabularyCopy.splice(randomIndex, 1)[0];
+        randomQuestions.push(randomQuestion);
+      }
+
+      displayQuestion();
+    }
+
+    displayQuestion();
+  </script>
+</body>
+</html>
+
