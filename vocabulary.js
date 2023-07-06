@@ -160,6 +160,7 @@ choices: ['zu', 'um', 'über', 'für'],
   choices: ['auf', 'für', 'an', 'mit'],
     correctAnswerIndex: 2
   },
+  {
   question: '„Dieser hier", antwortet er und deutet .......... den Hebel links unten.',
 choices: ['auf', 'für', 'bei', 'mit'],
   correctAnswerIndex: 0
