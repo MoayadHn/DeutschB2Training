@@ -86,18 +86,34 @@
       }
     }
 
-    function displayResult() {
-      questionContainer.style.display = 'none';
+      function displayResult() {
+        questionContainer.style.display = 'none';
 
-      var resultHtml = `
-        <h2>Test Result</h2>
-        <p>Your score: ${score}/${totalQuestions}</p>
-      `;
-      resultContainer.innerHTML = resultHtml;
+        var resultHtml = '<h2>Test Result</h2>';
+        resultHtml += `<p>Your score: ${score}/${totalQuestions}</p>`;
 
-      restartButton.style.display = 'block';
-      restartButton.addEventListener('click', restartTest);
-    }
+        // Display missed questions with correct answers
+        if (score < totalQuestions) {
+          resultHtml += '<h3>Missed Questions</h3>';
+          for (var i = 0; i < randomQuestions.length; i++) {
+            var question = randomQuestions[i];
+            var selectedOptionIndex = questionContainer.querySelectorAll('.option[data-index]:checked')[i].getAttribute('data-index');
+            var selectedAnswer = question.options[selectedOptionIndex];
+
+            if (selectedAnswer !== question.answer) {
+              resultHtml += `<p>Question: ${question.word}</p>`;
+              resultHtml += `<p>Your answer: ${selectedAnswer}</p>`;
+              resultHtml += `<p>Correct answer: ${question.answer}</p>`;
+            }
+          }
+        }
+
+        resultContainer.innerHTML = resultHtml;
+
+        restartButton.style.display = 'block';
+        restartButton.addEventListener('click', restartTest);
+      }
+
 
     function restartTest() {
       currentQuestionIndex = 0;
