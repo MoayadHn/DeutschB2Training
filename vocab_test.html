@@ -99,12 +99,13 @@
           for (var i = 0; i < randomQuestions.length; i++) {
             var question = randomQuestions[i];
             var selectedOptionIndex = getSelectedOptionIndex(i);
-            var selectedAnswer = question.options[selectedOptionIndex];
+            var selectedAnswer = question.choices[selectedOptionIndex];
+            var correctAnswer = question.choices[question.correctAnswerIndex];
 
-            if (selectedAnswer !== question.answer) {
-              resultHtml += `<p>Question: ${question.word}</p>`;
+            if (selectedAnswer !== correctAnswer) {
+              resultHtml += `<p>Question: ${question.question}</p>`;
               resultHtml += `<p>Your answer: ${selectedAnswer}</p>`;
-              resultHtml += `<p>Correct answer: ${question.answer}</p>`;
+              resultHtml += `<p>Correct answer: ${correctAnswer}</p>`;
             }
           }
         }
@@ -114,6 +115,7 @@
         restartButton.style.display = 'block';
         restartButton.addEventListener('click', restartTest);
       }
+
 
       function getSelectedOptionIndex(questionIndex) {
         var options = questionContainer.querySelectorAll('.option');
