@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>German Vocabulary Test</h1>
+    <h2>Verben mit Präpositionen</h2>
     <div id="question-container"></div>
     <div id="result-container"></div>
     <button id="restart-button" class="button" style="display: none;">Restart Test</button>
@@ -57,34 +57,35 @@
       });
     }
 
-    function handleAnswerSelection(event) {
-      var selectedOption = event.target;
-      var selectedQuestionIndex = parseInt(selectedOption.getAttribute('data-question'));
-      var selectedOptionIndex = parseInt(selectedOption.getAttribute('data-index'));
+      function handleAnswerSelection(event) {
+        var selectedOption = event.target;
+        var selectedQuestionIndex = parseInt(selectedOption.getAttribute('data-question'));
+        var selectedOptionIndex = parseInt(selectedOption.getAttribute('data-index'));
 
-      var question = randomQuestions[selectedQuestionIndex];
-      var correctAnswerIndex = question.correctAnswerIndex;
+        var question = randomQuestions[selectedQuestionIndex];
+        var correctAnswerIndex = question.correctAnswerIndex;
 
-      if (selectedOptionIndex === correctAnswerIndex) {
-        score++;
-        selectedOption.classList.add('correct');
-      } else {
-        selectedOption.classList.add('incorrect');
+        if (selectedOptionIndex === correctAnswerIndex) {
+          score++;
+          selectedOption.classList.add('correct');
+        } else {
+          selectedOption.classList.add('incorrect');
+        }
+
+        var options = questionContainer.querySelectorAll('.option');
+        options.forEach(option => {
+          option.removeEventListener('click', handleAnswerSelection);
+        });
+
+        currentQuestionIndex++;
+
+        if (currentQuestionIndex < totalQuestions) {
+          setTimeout(displayQuestion, 1000);
+        } else {
+          setTimeout(displayResult, 1000);
+        }
       }
 
-      var options = questionContainer.querySelectorAll('.option');
-      options.forEach(option => {
-        option.removeEventListener('click', handleAnswerSelection);
-      });
-
-      currentQuestionIndex++;
-
-      if (currentQuestionIndex < totalQuestions) {
-        setTimeout(displayQuestion, 1000);
-      } else {
-        displayResult();
-      }
-    }
 
 
       function displayResult() {
