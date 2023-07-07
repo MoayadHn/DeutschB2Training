@@ -53,10 +53,13 @@
 
       var options = questionContainer.querySelectorAll('.option');
       options.forEach(option => {
-        option.addEventListener('click', handleAnswerSelection);
+        option.addEventListener('click', function() {
+          options.forEach(o => o.classList.remove('selected'));
+          this.classList.add('selected');
+        });
       });
-    }
 
+    }
 
     function handleAnswerSelection(event) {
       var selectedOption = event.target;
@@ -97,7 +100,7 @@
           resultHtml += '<h3>Missed Questions</h3>';
           for (var i = 0; i < randomQuestions.length; i++) {
             var question = randomQuestions[i];
-            var selectedOptionIndex = questionContainer.querySelectorAll('.option[data-index]:checked')[i].getAttribute('data-index');
+            var selectedOptionIndex = getSelectedOptionIndex(i);
             var selectedAnswer = question.options[selectedOptionIndex];
 
             if (selectedAnswer !== question.answer) {
@@ -114,6 +117,15 @@
         restartButton.addEventListener('click', restartTest);
       }
 
+      function getSelectedOptionIndex(questionIndex) {
+        var options = questionContainer.querySelectorAll('.option');
+        for (var i = 0; i < options.length; i++) {
+          if (options[i].classList.contains('selected')) {
+            return parseInt(options[i].getAttribute('data-index'));
+          }
+        }
+        return -1; // No option selected
+      }
 
     function restartTest() {
       currentQuestionIndex = 0;
