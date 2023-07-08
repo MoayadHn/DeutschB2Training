@@ -73,7 +73,7 @@
         }
 
         // Store the selected option index in the userAnswerIndex property
-        question.userAnswerIndex = selectedOptionIndex;
+        randomQuestions[selectedQuestionIndex].userAnswerIndex = selectedOptionIndex;
 
         var options = questionContainer.querySelectorAll('.option');
         options.forEach(option => {
