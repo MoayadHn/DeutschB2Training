@@ -72,8 +72,8 @@
           selectedOption.classList.add('incorrect');
         }
 
-        // Store the selected option index in the question object
-         randomQuestions[selectedQuestionIndex].userAnswerIndex = selectedOptionIndex;
+        // Store the selected option index in the userAnswerIndex property
+        question.userAnswerIndex = selectedOptionIndex;
 
         var options = questionContainer.querySelectorAll('.option');
         options.forEach(option => {
@@ -90,7 +90,6 @@
       }
 
 
-
       function displayResult() {
         questionContainer.style.display = 'none';
 
@@ -102,9 +101,8 @@
           resultHtml += '<h3>Missed Questions</h3>';
           for (var i = 0; i < randomQuestions.length; i++) {
             var question = randomQuestions[i];
-            var selectedOption = questionContainer.querySelector(`.option[data-question="${i}"]:checked`);
-            var selectedOptionIndex = selectedOption ? parseInt(selectedOption.getAttribute('data-index')) : -1;
-            var selectedAnswer = selectedOptionIndex !== -1 ? question.choices[selectedOptionIndex] : 'Not answered';
+            var selectedOptionIndex = question.userAnswerIndex;
+            var selectedAnswer = selectedOptionIndex !== undefined ? question.choices[selectedOptionIndex] : 'Not answered';
             var correctAnswer = question.choices[question.correctAnswerIndex];
 
             if (selectedAnswer !== correctAnswer) {
