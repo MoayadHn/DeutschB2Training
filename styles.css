@@ -96,4 +96,15 @@ body {
   background-color: #ff7878 !important;
   color: #fff;
 }
+question-missed {
+  color: red;
+  font-weight: bold;
+}
 
+.user-answer {
+  color: red;
+}
+
+.correct-answer {
+  color: green;
+}

@@ -72,6 +72,9 @@
           selectedOption.classList.add('incorrect');
         }
 
+        // Store the selected option index in the question object
+         randomQuestions[selectedQuestionIndex].userAnswerIndex = selectedOptionIndex;
+
         var options = questionContainer.querySelectorAll('.option');
         options.forEach(option => {
           option.removeEventListener('click', handleAnswerSelection);
@@ -100,13 +103,13 @@
           for (var i = 0; i < randomQuestions.length; i++) {
             var question = randomQuestions[i];
             var selectedOptionIndex = getSelectedOptionIndex(i);
-            var selectedAnswer = question.choices[selectedOptionIndex];
+            var selectedAnswer = selectedOptionIndex !== undefined ? question.choices[selectedOptionIndex] : 'Not answered';
             var correctAnswer = question.choices[question.correctAnswerIndex];
 
             if (selectedAnswer !== correctAnswer) {
               resultHtml += `<p>Question: ${question.question}</p>`;
-              resultHtml += `<p>Your answer: ${selectedAnswer}</p>`;
-              resultHtml += `<p>Correct answer: ${correctAnswer}</p>`;
+              resultHtml += `<p>Your answer: <span class="user-answer">${selectedAnswer}</span></p>`;
+              resultHtml += `<p>Correct answer: <span class="correct-answer">${correctAnswer}</span></p>`;
             }
           }
         }
