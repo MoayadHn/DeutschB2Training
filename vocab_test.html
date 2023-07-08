@@ -102,12 +102,13 @@
           resultHtml += '<h3>Missed Questions</h3>';
           for (var i = 0; i < randomQuestions.length; i++) {
             var question = randomQuestions[i];
-            var selectedOptionIndex = getSelectedOptionIndex(i);
-            var selectedAnswer = selectedOptionIndex !== undefined ? question.choices[selectedOptionIndex] : 'Not answered';
+            var selectedOption = questionContainer.querySelector(`.option[data-question="${i}"]:checked`);
+            var selectedOptionIndex = selectedOption ? parseInt(selectedOption.getAttribute('data-index')) : -1;
+            var selectedAnswer = selectedOptionIndex !== -1 ? question.choices[selectedOptionIndex] : 'Not answered';
             var correctAnswer = question.choices[question.correctAnswerIndex];
 
             if (selectedAnswer !== correctAnswer) {
-              resultHtml += `<p>Question: ${question.question}</p>`;
+              resultHtml += `<p class="question-missed">${question.question}</p>`;
               resultHtml += `<p>Your answer: <span class="user-answer">${selectedAnswer}</span></p>`;
               resultHtml += `<p>Correct answer: <span class="correct-answer">${correctAnswer}</span></p>`;
             }
