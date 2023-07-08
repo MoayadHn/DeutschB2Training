@@ -113,6 +113,8 @@
               resultHtml += `<p>Correct answer: <span class="correct-answer">${correctAnswer}</span></p>`;
             }
           }
+        } else {
+          resultHtml += '<p>Congratulations! You answered all questions correctly.</p>';
         }
 
         resultContainer.innerHTML = resultHtml;
