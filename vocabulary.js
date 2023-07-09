@@ -45,8 +45,8 @@ const vocabulary = [
     correctAnswerIndex: 0
     },
     {
-    question: ........... dem Text sollten Sie noch arbeiten.',
-    choices: ['auf', 'an', 'bei', 'mit'],
+    question: '........... dem Text sollten Sie noch arbeiten.',
+    choices: ['Auf', 'An', 'Bei', 'Mit'],
     correctAnswerIndex: 1
     },
     {
