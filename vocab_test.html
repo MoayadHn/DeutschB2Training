@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
-  <title>German Vocabulary Test</title>
+  <title>Deutschtest</title>
 </head>
 <body>
   <div class="container">
     <h2>Verben mit Präpositionen</h2>
     <div id="question-container"></div>
     <div id="result-container"></div>
-    <button id="restart-button" class="button" style="display: none;">Restart Test</button>
+    <button id="restart-button" class="button" style="display: none;">Test neu starten</button>
   </div>
 
   <script type="module">
@@ -93,12 +93,12 @@
       function displayResult() {
         questionContainer.style.display = 'none';
 
-        var resultHtml = '<h2>Test Result</h2>';
-        resultHtml += `<p>Your score: ${score}/${totalQuestions}</p>`;
+        var resultHtml = '<h3>Testergebnis:</h3>';
+        resultHtml += `<p>deine Punktzahl: ${score}/${totalQuestions}</p>`;
 
         // Display missed questions with correct answers
         if (score < totalQuestions) {
-          resultHtml += '<h3>Missed Questions</h3>';
+          resultHtml += '<h3>Frage(n), die falsch beantwortet wurde(n):</h3>';
           for (var i = 0; i < randomQuestions.length; i++) {
             var question = randomQuestions[i];
             var selectedOptionIndex = question.userAnswerIndex;
@@ -107,12 +107,12 @@
 
             if (selectedAnswer !== correctAnswer) {
               resultHtml += `<p class="question-missed">${question.question}</p>`;
-              resultHtml += `<p>Your answer: <span class="user-answer">${selectedAnswer}</span></p>`;
-              resultHtml += `<p>Correct answer: <span class="correct-answer">${correctAnswer}</span></p>`;
+              resultHtml += `<p>deine Antwort: <span class="user-answer">${selectedAnswer}</span></p>`;
+              resultHtml += `<p>richtige Antwort: <span class="correct-answer">${correctAnswer}</span></p>`;
             }
           }
         } else {
-          resultHtml += '<p>Congratulations! You answered all questions correctly.</p>';
+          resultHtml += '<p>Herzlichen Glückwunsch! Du hast alle Fragen richtig beantwortet.</p>';
         }
 
         resultContainer.innerHTML = resultHtml;
